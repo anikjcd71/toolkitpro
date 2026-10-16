@@ -4,66 +4,88 @@ $q = trim((string)($_GET['q'] ?? ''));
 $cat = trim((string)($_GET['category'] ?? ''));
 $sql = "SELECT t.*, c.name AS category_name, c.slug AS category_slug FROM tools t LEFT JOIN categories c ON c.id=t.category_id WHERE t.status='published'";
 $args = [];
-if ($q !== '') { $sql .= " AND (t.name LIKE ? OR t.description LIKE ?)"; $args[]="%$q%"; $args[]="%$q%"; }
-if ($cat !== '') { $sql .= " AND c.slug=?"; $args[]=$cat; }
+if ($q !== '') { $sql .= " AND (t.name LIKE ? OR t.description LIKE ?)"; $args[] = "%$q%"; $args[] = "%$q%"; }
+if ($cat !== '') { $sql .= " AND c.slug=?"; $args[] = $cat; }
 $sql .= " ORDER BY t.name";
-$stmt = db()->prepare($sql); $stmt->execute($args); $tools=$stmt->fetchAll();
-$categories=db()->query("SELECT name,slug FROM categories ORDER BY name")->fetchAll();
+$stmt = db()->prepare($sql); $stmt->execute($args); $tools = $stmt->fetchAll();
+$categories = db()->query("SELECT name,slug FROM categories ORDER BY name")->fetchAll();
+$toolIcons = ['✦','▤','⌘','▧','↗','✳'];
 ?>
 <!doctype html>
 <html lang="bn">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ToolkitPro — আপনার কাজের অনলাইন টুলবক্স</title>
-<meta name="description" content="ToolkitPro-তে PDF, ছবি, লেখা ও দৈনন্দিন ডিজিটাল কাজের দরকারি অনলাইন টুলস এক জায়গায় খুঁজুন ও ব্যবহার করুন।">
-<meta name="theme-color" content="#202d70">
-<meta property="og:type" content="website"><meta property="og:site_name" content="ToolkitPro"><meta property="og:title" content="ToolkitPro — আপনার কাজের স্মার্ট টুলবক্স"><meta property="og:description" content="দৈনন্দিন ডিজিটাল কাজের দরকারি অনলাইন টুলস—এক জায়গায়, সহজে খুঁজুন, দ্রুত ব্যবহার করুন।">
-<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg"><link rel="alternate icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ToolkitPro — সব টুলস এক জায়গায়</title>
+<meta name="description" content="PDF, ছবি, লেখা ও দৈনন্দিন ডিজিটাল কাজের প্রয়োজনীয় অনলাইন টুলস—ToolkitPro-তে এক জায়গায় খুঁজুন ও ব্যবহার করুন।">
+<meta name="theme-color" content="#315eea">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ToolkitPro">
+<meta property="og:title" content="ToolkitPro — সব টুলস এক জায়গায়">
+<meta property="og:description" content="খুঁজুন, ক্যাটাগরি বেছে নিন এবং আপনার প্রয়োজনীয় অনলাইন টুল ব্যবহার করুন।">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="stylesheet" href="/assets/style.css">
 </head>
 <body id="top">
-<header class="site-header"><div class="header-inner">
-<a class="brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark" aria-hidden="true">⚒</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a>
-<button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="মেনু খুলুন"><span></span><span></span><span></span></button><nav class="main-nav" id="primary-navigation" aria-label="প্রধান নেভিগেশন"><a class="nav-active" href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></nav>
-<a class="admin-link" href="/admin/login.php">অ্যাডমিন <span aria-hidden="true">↗</span></a>
-</div></header>
+<header class="site-header">
+ <div class="header-inner">
+  <a class="brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark" aria-hidden="true">⚒</span><span class="brand-name">Toolkit<span class="brand-pro">Pro</span><small>আপনার অনলাইন টুলস</small></span></a>
+  <nav class="main-nav" id="primary-navigation" aria-label="প্রধান নেভিগেশন"><a class="nav-active" href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></nav>
+  <div class="header-actions">
+   <a class="icon-button home-button" href="/" aria-label="হোম" title="হোম"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10h-6v-7H9v7H3z"/></svg></a>
+   <button class="icon-button theme-toggle" type="button" aria-label="ডার্ক মোড চালু/বন্ধ" title="ডার্ক মোড"><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 9 9 0 1 0 20.5 15.2Z"/></svg><svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button>
+   <button class="icon-button mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="মেনু খুলুন" title="মেনু"><span></span><span></span><span></span></button>
+  </div>
+ </div>
+</header>
 <main>
-<section class="hero"><div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
-<div class="hero-content">
-<span class="hero-kicker"><span class="pulse-dot"></span> আপনার কাজের স্মার্ট টুলবক্স</span>
-<h1>সব টুলস <span>এক জায়গায়</span></h1>
-<p class="hero-copy">খুঁজুন, ক্যাটাগরি বেছে নিন এবং একই workspace-এ আপনার প্রয়োজনীয় অনলাইন টুল ব্যবহার করুন।</p>
-<form class="search-form" method="get" action="/" role="search"><span class="search-icon" aria-hidden="true">⌕</span>
-<input name="q" value="<?=e($q)?>" placeholder="কোন টুল খুঁজছেন? যেমন: PDF, ছবি, লেখা…" aria-label="টুল খুঁজুন">
-<?php if ($cat !== ''): ?><input type="hidden" name="category" value="<?=e($cat)?>"><?php endif; ?>
-<button type="submit">খুঁজুন <span aria-hidden="true">→</span></button></form>
-<div class="hero-note"><span aria-hidden="true">✦</span> সহজ ইন্টারফেস <span class="note-separator">·</span> দ্রুত ব্যবহার <span class="note-separator">·</span> এক জায়গায় প্রয়োজনীয় টুলস</div>
-</div>
-<div class="hero-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="tool-tile tile-main">✳<small>TOOLS</small></div><div class="tool-tile tile-pdf">PDF<span>↗</span></div><div class="tool-tile tile-image">▧<small>IMAGE</small></div><div class="tool-tile tile-code">&lt;/&gt;</div><div class="art-spark spark-a">✦</div><div class="art-spark spark-b">✧</div></div>
-</section>
-<section class="trust-strip" aria-label="ToolkitPro বৈশিষ্ট্য">
-<div><span class="trust-icon">⌕</span><span><b>সহজে খুঁজুন</b><small>সার্চ ও ক্যাটাগরি</small></span></div>
-<div><span class="trust-icon">↗</span><span><b>দ্রুত শুরু করুন</b><small>প্রয়োজনীয় টুলে সরাসরি</small></span></div>
-<div><span class="trust-icon">▦</span><span><b>এক জায়গায়</b><small>বিভিন্ন কাজের টুলস</small></span></div>
-</section>
-<section class="content-section" id="categories">
-<div class="section-heading"><div><span class="section-kicker">বেছে নিন আপনার প্রয়োজন</span><h2>ক্যাটাগরি অনুযায়ী খুঁজুন</h2><p>আপনার কাজের ধরন অনুযায়ী টুলস দেখুন।</p></div><a class="text-link" href="#tools">সব টুলস দেখুন <span>→</span></a></div>
-<div class="category-list"><a class="category-chip <?= $cat === '' ? 'selected' : '' ?>" href="/"><span class="chip-symbol">✦</span> সব ক্যাটাগরি</a>
-<?php foreach($categories as $c): ?><a class="category-chip <?= $cat === $c['slug'] ? 'selected' : '' ?>" href="/?category=<?=e($c['slug'])?>"><span class="chip-symbol">▦</span><?=e($c['name'])?></a><?php endforeach; ?>
-</div></section>
-<section class="content-section tools-section" id="tools">
-<div class="section-heading tools-heading"><div><span class="section-kicker"><?= $q !== '' ? 'সার্চের ফলাফল' : ($cat !== '' ? 'নির্বাচিত ক্যাটাগরি' : 'আপনার কাজের জন্য') ?></span><h2><?= $q !== '' ? 'মিলে যাওয়া টুলস' : 'জনপ্রিয় ও প্রয়োজনীয় টুলস' ?></h2><p><?= $q !== '' ? 'আপনার সার্চের সঙ্গে মিলে যাওয়া টুলগুলো এখানে আছে।' : 'টুল বেছে নিয়ে কাজ শুরু করুন।' ?></p></div><span class="result-count"><?=count($tools)?> টি টুল</span></div>
-<?php if($tools): ?><div class="tool-grid">
-<?php foreach($tools as $i=>$t): ?><article class="tool-card">
-<div class="tool-card-top"><span class="tool-icon icon-<?=($i%5)+1?>" aria-hidden="true"><?=['✦','▤','⌘','▧','↗'][$i%5]?></span><span class="tool-category"><?=e($t['category_name'] ?? 'ToolkitPro')?></span></div>
-<h3><?=e($t['name'])?></h3><p><?=e($t['description'])?></p>
-<div class="tool-card-bottom"><?php if(!empty($t['tool_url'])): ?><a class="tool-open" href="<?=e($t['tool_url'])?>">টুলটি ব্যবহার করুন <span aria-hidden="true">→</span></a><?php else: ?><span class="coming-soon">শীঘ্রই আসছে</span><?php endif; ?></div>
-</article><?php endforeach; ?></div>
-<?php else: ?><div class="empty-state"><div class="empty-icon">⌕</div><h3><?= $q !== '' ? 'কোনো টুল পাওয়া যায়নি' : 'টুলস যোগ করা হচ্ছে' ?></h3><p><?= $q !== '' ? 'অন্য শব্দ দিয়ে সার্চ করুন অথবা সব ক্যাটাগরি দেখুন।' : 'নতুন টুল যুক্ত হলে এখানে দেখা যাবে।' ?></p><?php if($q !== '' || $cat !== ''): ?><a class="empty-action" href="/">সব টুলস দেখুন <span>→</span></a><?php endif; ?></div><?php endif; ?>
-</section></main>
+ <section class="hero">
+  <div class="hero-content">
+   <span class="hero-kicker"><span class="pulse-dot"></span> TOOLKIT PRO · TOOL ENGINE</span>
+   <h1>সব টুলস <span>এক জায়গায়</span></h1>
+   <p class="hero-copy">খুঁজুন, ক্যাটাগরি বেছে নিন এবং একই workspace-এ আপনার প্রয়োজনীয় অনলাইন টুল ব্যবহার করুন।</p>
+   <form class="search-form" method="get" action="/" role="search">
+    <span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg></span>
+    <input name="q" value="<?=e($q)?>" placeholder="যেমন: JSON, Password, PDF…" aria-label="টুল খুঁজুন">
+    <?php if ($cat !== ''): ?><input type="hidden" name="category" value="<?=e($cat)?>"><?php endif; ?>
+    <button type="submit">খুঁজুন <span aria-hidden="true">→</span></button>
+   </form>
+  </div>
+  <div class="hero-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="floating-tool art-center">✳<small>TOOLKIT</small></div><div class="floating-tool art-pdf">PDF</div><div class="floating-tool art-image">▧</div><div class="floating-tool art-code">&lt;/&gt;</div><span class="art-star star-one">✦</span><span class="art-star star-two">✧</span></div>
+ </section>
+ <section class="benefits" aria-label="ToolkitPro সুবিধা">
+  <div class="benefit"><span class="benefit-icon">⌕</span><span><b>সহজে খুঁজুন</b><small>সার্চ ও ক্যাটাগরি</small></span></div>
+  <div class="benefit"><span class="benefit-icon">↗</span><span><b>দ্রুত ব্যবহার</b><small>টুলে সরাসরি প্রবেশ</small></span></div>
+  <div class="benefit"><span class="benefit-icon">▦</span><span><b>এক workspace</b><small>দরকারি টুলস এক জায়গায়</small></span></div>
+ </section>
+ <section class="content-section" id="categories">
+  <div class="section-heading"><div><span class="section-kicker">আপনার কাজের ধরন বেছে নিন</span><h2>ক্যাটাগরি</h2><p>কাজ অনুযায়ী প্রয়োজনীয় টুল খুঁজে নিন।</p></div><a class="text-link" href="#tools">সব টুলস <span>→</span></a></div>
+  <div class="category-list"><a class="category-chip <?= $cat === '' ? 'selected' : '' ?>" href="/"><span class="chip-symbol">✦</span> সব ক্যাটাগরি</a>
+   <?php foreach ($categories as $c): ?><a class="category-chip <?= $cat === $c['slug'] ? 'selected' : '' ?>" href="/?category=<?=e($c['slug'])?>"><span class="chip-symbol" aria-hidden="true">▦</span><?=e($c['name'])?></a><?php endforeach; ?>
+  </div>
+ </section>
+ <section class="content-section tools-section" id="tools">
+  <div class="section-heading tools-heading"><div><span class="section-kicker"><?= $q !== '' ? 'সার্চের ফলাফল' : ($cat !== '' ? 'নির্বাচিত ক্যাটাগরি' : 'আপনার কাজের জন্য') ?></span><h2><?= $q !== '' ? 'মিলে যাওয়া টুলস' : 'টুলস এক্সপ্লোর করুন' ?></h2><p><?= $q !== '' ? 'সার্চের সঙ্গে মিলে যাওয়া টুলগুলো দেখুন।' : 'টুল বেছে নিয়ে কাজ শুরু করুন।' ?></p></div><span class="result-count"><?=count($tools)?> টি টুল</span></div>
+  <?php if ($tools): ?><div class="tool-grid">
+   <?php foreach ($tools as $i=>$t): ?><article class="tool-card"><div class="tool-card-top"><span class="tool-icon icon-<?=($i%6)+1?>" aria-hidden="true"><?=$toolIcons[$i%count($toolIcons)]?></span><span class="tool-category"><?=e($t['category_name'] ?? 'ToolkitPro')?></span></div><h3><?=e($t['name'])?></h3><p><?=e($t['description'])?></p><div class="tool-card-bottom"><?php if (!empty($t['tool_url'])): ?><a class="tool-open" href="<?=e($t['tool_url'])?>">টুলটি খুলুন <span aria-hidden="true">→</span></a><?php else: ?><span class="coming-soon">শীঘ্রই আসছে</span><?php endif; ?></div></article><?php endforeach; ?>
+  </div><?php else: ?><div class="empty-state"><span class="empty-icon">⌕</span><h3><?= $q !== '' ? 'কোনো টুল পাওয়া যায়নি' : 'এখনো টুল যুক্ত হয়নি' ?></h3><p><?= $q !== '' ? 'অন্য শব্দ দিয়ে খুঁজুন অথবা সব ক্যাটাগরি দেখুন।' : 'অ্যাডমিন প্যানেল থেকে টুল যোগ করা যাবে।' ?></p><?php if ($q !== '' || $cat !== ''): ?><a class="empty-action" href="/">সব টুলস দেখুন →</a><?php endif; ?></div><?php endif; ?>
+ </section>
+</main>
 <footer class="site-footer"><div class="footer-inner">
-<div class="footer-about"><a class="brand footer-brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark" aria-hidden="true">⚒</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a><p>আপনার ডিজিটাল কাজকে সহজ, দ্রুত ও আরও গুছিয়ে করার স্মার্ট টুলবক্স।</p></div>
-<div class="footer-nav"><strong>দ্রুত লিংক</strong><a href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></div>
-<div class="footer-nav"><strong>শুরু করুন</strong><a href="#tools">টুলস খুঁজুন ↗</a><a href="/admin/login.php">অ্যাডমিন প্যানেল ↗</a></div>
-<div class="footer-bottom"><span>© <?=date("Y")?> ToolkitPro. সর্বস্বত্ব সংরক্ষিত।</span><a href="#top">উপরে যান ↑</a></div>
+ <div class="footer-about"><a class="brand footer-brand" href="/"><span class="brand-mark" aria-hidden="true">⚒</span><span class="brand-name">Toolkit<span class="brand-pro">Pro</span><small>আপনার অনলাইন টুলস</small></span></a><p>ডিজিটাল কাজকে সহজ, দ্রুত ও গুছিয়ে করার স্মার্ট টুলবক্স।</p></div>
+ <div class="footer-nav"><strong>দ্রুত লিংক</strong><a href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></div>
+ <div class="footer-nav"><strong>ToolkitPro</strong><a href="/admin/login.php">অ্যাডমিন প্যানেল ↗</a><a href="#top">পাতার শুরুতে ↑</a></div>
+ <div class="footer-bottom"><span>© <?=date('Y')?> ToolkitPro. সর্বস্বত্ব সংরক্ষিত।</span><span>Made for simpler digital work</span></div>
 </div></footer>
-<script>(function(){var btn=document.querySelector('.mobile-menu-toggle'),nav=document.querySelector('.main-nav');if(!btn||!nav)return;btn.addEventListener('click',function(){var open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!open));nav.classList.toggle('is-open',!open);btn.setAttribute('aria-label',open?'মেনু খুলুন':'মেনু বন্ধ করুন');});nav.addEventListener('click',function(e){if(e.target.closest('a')){nav.classList.remove('is-open');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','মেনু খুলুন');}});})();</script></body></html>
+<script>
+(function(){
+ const menu=document.querySelector('.mobile-menu-toggle'),nav=document.querySelector('.main-nav');
+ if(menu&&nav){menu.addEventListener('click',()=>{const opened=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!opened));nav.classList.toggle('is-open',!opened);menu.setAttribute('aria-label',opened?'মেনু খুলুন':'মেনু বন্ধ করুন');});nav.addEventListener('click',e=>{if(e.target.closest('a')){nav.classList.remove('is-open');menu.setAttribute('aria-expanded','false');}});}
+ const toggle=document.querySelector('.theme-toggle');
+ const setTheme=dark=>{document.documentElement.classList.toggle('dark',dark);if(toggle)toggle.setAttribute('aria-pressed',String(dark));};
+ try{setTheme(localStorage.getItem('toolkitpro-theme')==='dark');}catch(e){}
+ if(toggle)toggle.addEventListener('click',()=>{const dark=!document.documentElement.classList.contains('dark');setTheme(dark);try{localStorage.setItem('toolkitpro-theme',dark?'dark':'light');}catch(e){}});
+})();
+</script>
+</body></html>
