@@ -22,7 +22,7 @@ $categories=db()->query("SELECT name,slug FROM categories ORDER BY name")->fetch
 </head>
 <body id="top">
 <header class="site-header"><div class="header-inner">
-<a class="brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark">T</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a>
+<a class="brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark" aria-hidden="true">⚒</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a>
 <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="মেনু খুলুন"><span></span><span></span><span></span></button><nav class="main-nav" id="primary-navigation" aria-label="প্রধান নেভিগেশন"><a class="nav-active" href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></nav>
 <a class="admin-link" href="/admin/login.php">অ্যাডমিন <span aria-hidden="true">↗</span></a>
 </div></header>
@@ -30,8 +30,8 @@ $categories=db()->query("SELECT name,slug FROM categories ORDER BY name")->fetch
 <section class="hero"><div class="hero-glow hero-glow-one"></div><div class="hero-glow hero-glow-two"></div>
 <div class="hero-content">
 <span class="hero-kicker"><span class="pulse-dot"></span> আপনার কাজের স্মার্ট টুলবক্স</span>
-<h1>কাজ হোক সহজ,<br><span>সময় বাঁচুক বেশি।</span></h1>
-<p class="hero-copy">দৈনন্দিন ডিজিটাল কাজের দরকারি টুলস—এক জায়গায়, সহজে খুঁজুন, দ্রুত ব্যবহার করুন।</p>
+<h1>সব টুলস <span>এক জায়গায়</span></h1>
+<p class="hero-copy">খুঁজুন, ক্যাটাগরি বেছে নিন এবং একই workspace-এ আপনার প্রয়োজনীয় অনলাইন টুল ব্যবহার করুন।</p>
 <form class="search-form" method="get" action="/" role="search"><span class="search-icon" aria-hidden="true">⌕</span>
 <input name="q" value="<?=e($q)?>" placeholder="কোন টুল খুঁজছেন? যেমন: PDF, ছবি, লেখা…" aria-label="টুল খুঁজুন">
 <?php if ($cat !== ''): ?><input type="hidden" name="category" value="<?=e($cat)?>"><?php endif; ?>
@@ -61,7 +61,7 @@ $categories=db()->query("SELECT name,slug FROM categories ORDER BY name")->fetch
 <?php else: ?><div class="empty-state"><div class="empty-icon">⌕</div><h3><?= $q !== '' ? 'কোনো টুল পাওয়া যায়নি' : 'টুলস যোগ করা হচ্ছে' ?></h3><p><?= $q !== '' ? 'অন্য শব্দ দিয়ে সার্চ করুন অথবা সব ক্যাটাগরি দেখুন।' : 'নতুন টুল যুক্ত হলে এখানে দেখা যাবে।' ?></p><?php if($q !== '' || $cat !== ''): ?><a class="empty-action" href="/">সব টুলস দেখুন <span>→</span></a><?php endif; ?></div><?php endif; ?>
 </section></main>
 <footer class="site-footer"><div class="footer-inner">
-<div class="footer-about"><a class="brand footer-brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark">T</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a><p>আপনার ডিজিটাল কাজকে সহজ, দ্রুত ও আরও গুছিয়ে করার স্মার্ট টুলবক্স।</p></div>
+<div class="footer-about"><a class="brand footer-brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark" aria-hidden="true">⚒</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a><p>আপনার ডিজিটাল কাজকে সহজ, দ্রুত ও আরও গুছিয়ে করার স্মার্ট টুলবক্স।</p></div>
 <div class="footer-nav"><strong>দ্রুত লিংক</strong><a href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></div>
 <div class="footer-nav"><strong>শুরু করুন</strong><a href="#tools">টুলস খুঁজুন ↗</a><a href="/admin/login.php">অ্যাডমিন প্যানেল ↗</a></div>
 <div class="footer-bottom"><span>© <?=date("Y")?> ToolkitPro. সর্বস্বত্ব সংরক্ষিত।</span><a href="#top">উপরে যান ↑</a></div>
