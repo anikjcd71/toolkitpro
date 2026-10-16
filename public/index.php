@@ -15,8 +15,10 @@ $categories=db()->query("SELECT name,slug FROM categories ORDER BY name")->fetch
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ToolkitPro — আপনার কাজের অনলাইন টুলবক্স</title>
-<meta name="description" content="দৈনন্দিন কাজ সহজ করতে দরকারি অনলাইন টুলস এক জায়গায় খুঁজুন ও ব্যবহার করুন।">
-<meta name="theme-color" content="#f7f8fc"><link rel="stylesheet" href="/assets/style.css">
+<meta name="description" content="ToolkitPro-তে PDF, ছবি, লেখা ও দৈনন্দিন ডিজিটাল কাজের দরকারি অনলাইন টুলস এক জায়গায় খুঁজুন ও ব্যবহার করুন।">
+<meta name="theme-color" content="#202d70">
+<meta property="og:type" content="website"><meta property="og:site_name" content="ToolkitPro"><meta property="og:title" content="ToolkitPro — আপনার কাজের স্মার্ট টুলবক্স"><meta property="og:description" content="দৈনন্দিন ডিজিটাল কাজের দরকারি অনলাইন টুলস—এক জায়গায়, সহজে খুঁজুন, দ্রুত ব্যবহার করুন।">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg"><link rel="alternate icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
 <header class="site-header"><div class="header-inner">
