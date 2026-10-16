@@ -21,7 +21,7 @@ $categories=db()->query("SELECT name,slug FROM categories ORDER BY name")->fetch
 <body>
 <header class="site-header"><div class="header-inner">
 <a class="brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark">T</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a>
-<nav class="main-nav" aria-label="প্রধান নেভিগেশন"><a class="nav-active" href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></nav>
+<button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="মেনু খুলুন"><span></span><span></span><span></span></button><nav class="main-nav" id="primary-navigation" aria-label="প্রধান নেভিগেশন"><a class="nav-active" href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></nav>
 <a class="admin-link" href="/admin/login.php">অ্যাডমিন <span aria-hidden="true">↗</span></a>
 </div></header>
 <main>
@@ -59,4 +59,4 @@ $categories=db()->query("SELECT name,slug FROM categories ORDER BY name")->fetch
 <?php else: ?><div class="empty-state"><div class="empty-icon">⌕</div><h3><?= $q !== '' ? 'কোনো টুল পাওয়া যায়নি' : 'টুলস যোগ করা হচ্ছে' ?></h3><p><?= $q !== '' ? 'অন্য শব্দ দিয়ে সার্চ করুন অথবা সব ক্যাটাগরি দেখুন।' : 'নতুন টুল যুক্ত হলে এখানে দেখা যাবে।' ?></p><?php if($q !== '' || $cat !== ''): ?><a class="empty-action" href="/">সব টুলস দেখুন <span>→</span></a><?php endif; ?></div><?php endif; ?>
 </section></main>
 <footer class="site-footer"><div class="footer-inner"><a class="brand footer-brand" href="/"><span class="brand-mark">T</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a><p>আপনার ডিজিটাল কাজকে সহজ করার ছোট্ট উদ্যোগ।</p><span class="copyright">© <?=date('Y')?> ToolkitPro. সর্বস্বত্ব সংরক্ষিত।</span></div></footer>
-</body></html>
+<script>(function(){var btn=document.querySelector('.mobile-menu-toggle'),nav=document.querySelector('.main-nav');if(!btn||!nav)return;btn.addEventListener('click',function(){var open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!open));nav.classList.toggle('is-open',!open);btn.setAttribute('aria-label',open?'মেনু খুলুন':'মেনু বন্ধ করুন');});nav.addEventListener('click',function(e){if(e.target.closest('a')){nav.classList.remove('is-open');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','মেনু খুলুন');}});})();</script></body></html>
