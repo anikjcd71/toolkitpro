@@ -9,6 +9,7 @@ if ($cat !== '') { $sql .= " AND c.slug=?"; $args[] = $cat; }
 $sql .= " ORDER BY t.name";
 $stmt = db()->prepare($sql); $stmt->execute($args); $tools = $stmt->fetchAll();
 $categories = db()->query("SELECT name,slug FROM categories ORDER BY name")->fetchAll();
+require_once __DIR__ . '/../src/catalog.php';
 $toolIconFor = static function (string $name, string $category): array {
  $v = mb_strtolower($name . ' ' . $category);
  foreach ([
