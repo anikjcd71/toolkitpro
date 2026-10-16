@@ -8,8 +8,12 @@ header('X-Content-Type-Options: nosniff'); header('X-Frame-Options: DENY'); head
 function envv(string $key, ?string $default=null): ?string { $v=getenv($key); return $v===false?$default:$v; }
 function db(): PDO {
  static $pdo=null; if($pdo instanceof PDO) return $pdo;
- $host=envv('DB_HOST','127.0.0.1');$port=envv('DB_PORT','3306');$name=envv('DB_NAME','toolkitpro');
- $pdo=new PDO("mysql:host=$host;port=$port;dbname=$name;charset=utf8mb4",envv('DB_USER','root'),envv('DB_PASS',''),[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);
+ $driver=strtolower(envv('DB_DRIVER','pgsql')??'pgsql');
+ $host=envv('DB_HOST','127.0.0.1'); $port=envv('DB_PORT',$driver==='pgsql'?'5432':'3306'); $name=envv('DB_NAME','toolkitpro');
+ if($driver==='pgsql') $dsn="pgsql:host=$host;port=$port;dbname=$name";
+ elseif($driver==='mysql') $dsn="mysql:host=$host;port=$port;dbname=$name;charset=utf8mb4";
+ else throw new RuntimeException('Unsupported DB_DRIVER. Use pgsql or mysql.');
+ $pdo=new PDO($dsn,envv('DB_USER',''),envv('DB_PASS',''),[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);
  return $pdo;
 }
 function e(?string $s): string { return htmlspecialchars($s??'',ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8'); }
