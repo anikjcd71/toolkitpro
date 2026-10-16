@@ -87,7 +87,10 @@ $toolIconFor = static function (string $name, string $category): array {
       <div class="tool-group-heading"><div><span class="group-eyebrow">CATEGORY</span><h3><?=e($groupName)?></h3></div><span class="group-count"><?=count($groupTools)?> টুল</span></div>
       <div class="tool-grid">
        <?php foreach ($groupTools as $t): [$glyph,$kind] = $toolIconFor((string)$t['name'],(string)($t['category_name'] ?? '')); ?>
-        <article class="tool-card"><div class="tool-card-top"><span class="tool-icon tool-icon-<?=e($kind)?>" aria-hidden="true"><?=$glyph?></span><span class="tool-category"><?=e($t['category_name'] ?? 'ToolkitPro')?></span></div><h3><?=e($t['name'])?></h3><p><?=e($t['description'])?></p><div class="tool-card-bottom"><?php if (!empty($t['tool_url'])): ?><a class="tool-open" href="<?=e($t['tool_url'])?>">টুলটি ব্যবহার করুন <span aria-hidden="true">↗</span></a><?php else: ?><span class="coming-soon">শীঘ্রই আসছে</span><?php endif; ?></div></article>
+        <article class="tool-card"><div class="tool-card-top"><span class="tool-icon tool-icon-<?=e($kind)?>" aria-hidden="true"><?=$glyph?></span><span class="tool-category"><?=e($t['category_name'] ?? 'ToolkitPro')?></span></div><h3><?=e($t['name'])?></h3><p><?=e($t['description'])?></p><div class="tool-card-bottom"><?php
+         $liveToolRoutes = ['json-formatter'=>'/tools/json-formatter.php','word-counter'=>'/tools/word-counter.php'];
+         $destination = !empty($t['tool_url']) ? (string)$t['tool_url'] : ($liveToolRoutes[(string)$t['slug']] ?? '');
+        ?><?php if ($destination !== ''): ?><a class="tool-open" href="<?=e($destination)?>">টুলটি ব্যবহার করুন <span aria-hidden="true">↗</span></a><?php else: ?><span class="coming-soon">শীঘ্রই আসছে</span><?php endif; ?></div></article>
        <?php endforeach; ?>
       </div>
      </section>
