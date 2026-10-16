@@ -26,9 +26,16 @@ $toolIconFor = static function (string $name, string $category): array {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ToolkitPro — সব টুলস এক জায়গায়</title>
+<title>ToolkitPro — ফ্রি অনলাইন টুলস: PDF, Text, Developer ও SEO</title>
 <meta name="description" content="PDF, ছবি, লেখা ও দৈনন্দিন ডিজিটাল কাজের প্রয়োজনীয় অনলাইন টুলস—ToolkitPro-তে এক জায়গায় খুঁজুন ও ব্যবহার করুন।">
 <meta name="theme-color" content="#315eea">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://toolkitpro-yngj.onrender.com/">
+<meta property="og:url" content="https://toolkitpro-yngj.onrender.com/">
+<meta property="og:locale" content="bn_BD">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ToolkitPro — ফ্রি অনলাইন টুলস">
+<meta name="twitter:description" content="PDF, লেখা, ছবি, Developer ও SEO টুল এক জায়গায় খুঁজুন।">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ToolkitPro">
 <meta property="og:title" content="ToolkitPro — সব টুলস এক জায়গায়">
@@ -102,9 +109,10 @@ $toolIconFor = static function (string $name, string $category): array {
 </main>
 <footer class="site-footer"><div class="footer-inner">
  <div class="footer-about"><a class="brand footer-brand" href="/"><span class="brand-mark" aria-hidden="true">⚒</span><span class="brand-name">Toolkit<span class="brand-pro">Pro</span><small>আপনার অনলাইন টুলস</small></span></a><p>ডিজিটাল কাজকে সহজ, দ্রুত ও গুছিয়ে করার স্মার্ট টুলবক্স।</p></div>
- <div class="footer-nav"><strong>দ্রুত লিংক</strong><a href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></div>
- <div class="footer-nav"><strong>ToolkitPro</strong><a href="/admin/login.php">অ্যাডমিন প্যানেল ↗</a><a href="#top">পাতার শুরুতে ↑</a></div>
- <div class="footer-bottom"><span>© <?=date('Y')?> ToolkitPro. সর্বস্বত্ব সংরক্ষিত।</span><span>Made for simpler digital work</span></div>
+ <div class="footer-nav"><strong>দ্রুত লিংক</strong><a href="/">হোম</a><a href="/#categories">ক্যাটাগরি</a><a href="/#tools">সব টুলস</a><a href="/tools/word-counter.php">Word Counter</a><a href="/tools/json-formatter.php">JSON Formatter</a></div>
+ <div class="footer-nav"><strong>তথ্য ও সহায়তা</strong><a href="/about.php">আমাদের সম্পর্কে</a><a href="/contact.php">যোগাযোগ</a><a href="/privacy.php">গোপনীয়তা নীতি</a><a href="/terms.php">ব্যবহারের শর্ত</a><a href="/sitemap.xml">সাইটম্যাপ</a></div>
+ <div class="footer-nav"><strong>অ্যাকাউন্ট</strong><a href="/admin/login.php">অ্যাডমিন লগইন ↗</a><a href="#top">পাতার শুরুতে ↑</a></div>
+ <div class="footer-bottom"><span>© <?=date('Y')?> ToolkitPro. সর্বস্বত্ব সংরক্ষিত।</span><span>সহজ ডিজিটাল কাজের জন্য তৈরি</span></div>
 </div></footer>
 <script>
 (function(){
