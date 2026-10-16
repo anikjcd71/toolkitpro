@@ -69,3 +69,37 @@
  .tablewrap td .inline{margin:8px 0 0;display:block}
  .tablewrap td .inline button{width:auto}
 }
+
+/* ToolkitPro polish pass: premium surfaces, refined illustration and responsive rhythm */
+:root{--brand:#465be4;--brand-deep:#202d70;--brand-soft:#eef0ff;--radius-card:18px}
+::selection{background:#dce1ff;color:#1b285e}
+.site-header{box-shadow:0 3px 18px #1b2a5006}
+.brand-mark{position:relative;overflow:hidden}
+.brand-mark:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff25,transparent 58%);pointer-events:none}
+.hero{isolation:isolate}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 76% 28%,#9aaaff22,transparent 35%),linear-gradient(90deg,transparent 58%,#ffffff04)}
+.hero-art .tool-tile{animation:tile-float 6s ease-in-out infinite}
+.hero-art .tile-pdf{animation-delay:-1.2s}.hero-art .tile-image{animation-delay:-2.6s}.hero-art .tile-code{animation-delay:-3.4s}
+@keyframes tile-float{0%,100%{translate:0 0}50%{translate:0 -6px}}
+.category-chip,.tool-card,.admin-link{ -webkit-tap-highlight-color:transparent}
+.category-chip:active,.tool-open:active{transform:scale(.98)}
+.tool-card{border-radius:var(--radius-card);background:linear-gradient(180deg,#fff,#fefeff)}
+.tool-card-top .tool-icon{box-shadow:inset 0 0 0 1px #ffffffa8}
+.empty-state{box-shadow:0 8px 24px #1b2a5006}
+.footer-inner{align-items:start;flex-wrap:wrap}
+.footer-about{max-width:330px}
+.footer-about p{line-height:1.75;margin-top:12px}
+.footer-nav{display:flex;flex-direction:column;gap:10px;min-width:120px}
+.footer-nav strong{font-size:.8rem;color:#303b55;margin-bottom:3px}
+.footer-nav a{font-size:.78rem;color:#788398;text-decoration:none}
+.footer-nav a:hover,.footer-bottom a:hover{color:var(--brand)}
+.footer-bottom{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid #edf0f5;padding-top:18px;margin-top:8px;color:#929bad;font-size:.72rem}
+.footer-bottom a{color:#788398;text-decoration:none;font-weight:700}
+@media(max-width:620px){
+ .footer-inner{display:grid;grid-template-columns:1fr 1fr;gap:20px 16px}
+ .footer-about{grid-column:1/-1;max-width:none}
+ .footer-nav{min-width:0}
+ .footer-bottom{grid-column:1/-1;margin-top:0;flex-wrap:wrap}
+ .hero-art .tool-tile{animation:none}
+}
+@media(prefers-reduced-motion:reduce){.hero-art .tool-tile{animation:none}}
