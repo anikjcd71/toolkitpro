@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://toolkitpro-yngj.onrender.com/sitemap.xml
