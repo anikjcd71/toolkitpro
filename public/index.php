@@ -50,6 +50,7 @@ $toolIconFor = static function (string $name, string $category): array {
   <a class="brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark" aria-hidden="true">⚒</span><span class="brand-name">Toolkit<span class="brand-pro">Pro</span><small>আপনার অনলাইন টুলস</small></span></a>
   <nav class="main-nav" id="primary-navigation" aria-label="প্রধান নেভিগেশন"><a class="nav-active" href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></nav>
   <div class="header-actions">
+   <button class="language-toggle" type="button" aria-label="Switch language" title="বাংলা / English">EN</button>
    <a class="icon-button home-button" href="/" aria-label="হোম" title="হোম"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10h-6v-7H9v7H3z"/></svg></a>
    <button class="icon-button theme-toggle" type="button" aria-label="ডার্ক মোড চালু/বন্ধ" title="ডার্ক মোড"><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.2A8.7 8.7 0 0 1 8.8 3.5 9 9 0 1 0 20.5 15.2Z"/></svg><svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button>
    <button class="icon-button mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="মেনু খুলুন" title="মেনু"><span></span><span></span><span></span></button>
@@ -124,4 +125,5 @@ $toolIconFor = static function (string $name, string $category): array {
  if(toggle)toggle.addEventListener('click',()=>{const dark=!document.documentElement.classList.contains('dark');setTheme(dark);try{localStorage.setItem('toolkitpro-theme',dark?'dark':'light');}catch(e){}});
 })();
 </script>
+<script src="/assets/language.js" defer></script>
 </body></html>
