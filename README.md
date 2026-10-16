@@ -1,28 +1,32 @@
-# ToolkitPro (PHP + MySQL)
+# ToolkitPro
 
-Responsive online tools directory with an admin area and a basic authenticated API.
+PHP 8.3 + PDO-powered online tools directory and admin/API starter.
 
-## Setup
-1. Import `database/schema.sql` into MySQL.
-2. Import `database/api_migration.sql` into the same database to enable API keys and request logs.
-3. Configure `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASS` as Render environment variables.
-4. Create the first admin using `php scripts/create_admin.php admin@example.com 'Use-a-long-unique-password'`.
-5. Sign in at `/admin/login.php`.
+## Database engines
 
-## API v1
-- Endpoint: `GET /api/v1/tools`
-- Optional query parameters: `q`, `limit` (1–100; default 20), and `offset` (default 0).
-- Authentication: `Authorization: Bearer YOUR_API_KEY`
-- Rate limit: 60 requests per minute per API key.
-- API keys must be created in the admin area after API-key management is installed. Store keys privately; do not put them in browser-side JavaScript.
+ToolkitPro supports **PostgreSQL (recommended on Render)** and **MySQL** via PDO. Set `DB_DRIVER=pgsql` or `DB_DRIVER=mysql`.
 
-Example:
-```bash
-curl 'https://YOUR-DOMAIN/api/v1/tools?limit=10' -H 'Authorization: Bearer YOUR_API_KEY'
-```
+### Render PostgreSQL
 
-## Render deployment
-Push to GitHub; Render auto-deploys the Docker image. Configure a separately hosted MySQL database through Render environment variables. Never commit database passwords or provider API secrets.
+The Render service blueprint wires the existing Render database named `toolkit` to `DATABASE_URL`. Ensure the web service and database are in the same Render workspace/region.
 
-## Scope
-Current MVP includes the tool directory/search, protected admin CRUD, and the initial authenticated tools-list API. Tool execution engines, third-party AI integrations, user billing, and more API endpoints still need implementation.
+1. Deploy the latest `main` branch.
+2. Connect to the Render Postgres database using its dashboard-provided PSQL command or an SQL client.
+3. Run `database/schema.pgsql.sql`.
+4. Run `database/api_migration.pgsql.sql` to enable API keys/request logging.
+5. Create an admin using the project's admin setup script; configure its required environment variables securely.
+
+Do not paste database passwords or connection strings into chat, source control, or public issue reports.
+
+### MySQL alternative
+
+For cPanel/other MySQL hosting, configure these service environment variables:
+
+- `DB_DRIVER=mysql`
+- `DB_HOST`, `DB_PORT` (normally 3306), `DB_NAME`, `DB_USER`, `DB_PASS`
+
+Use `database/schema.sql` and `database/api_migration.sql` with your MySQL database. For Render, remove the `DATABASE_URL` database mapping in `render.yaml` and set the MySQL variables in the Render service environment.
+
+## API
+
+`GET /api/v1/tools` accepts a Bearer API key and optional `q`, `limit`, and `offset` parameters.
