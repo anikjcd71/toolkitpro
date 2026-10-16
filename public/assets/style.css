@@ -198,3 +198,5 @@ body{background:var(--paper);color:var(--ink)}
 }
 @media(max-width:380px){.brand small{display:none}.brand{font-size:.98rem}.hero-content{padding-left:18px;padding-right:18px}.search-form button{padding:10px}}
 @media(prefers-reduced-motion:reduce){.hero-art .tool-tile{animation:none}}
+
+.dark .moon-icon{display:none}.dark .sun-icon{display:block}
