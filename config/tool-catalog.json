@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "policy": "Only tested tools may be marked live. Empty url means upcoming.",
+  "categories": [
+    {"name":"Developer Tools","slug":"developer-tools","tools":[
+      {"name":"JSON Formatter","slug":"json-formatter","url":"/tools/json-formatter.php","status":"live"},
+      {"name":"Base64 Encoder / Decoder","slug":"base64-encoder-decoder","url":"","status":"upcoming"},
+      {"name":"URL Encoder / Decoder","slug":"url-encoder-decoder","url":"","status":"upcoming"},
+      {"name":"HTML Formatter","slug":"html-formatter","url":"","status":"upcoming"},
+      {"name":"Regex Tester","slug":"regex-tester","url":"","status":"upcoming"}
+    ]},
+    {"name":"Text Tools","slug":"text-tools","tools":[
+      {"name":"Word Counter","slug":"word-counter","url":"/tools/word-counter.php","status":"live"},
+      {"name":"Case Converter","slug":"case-converter","url":"","status":"upcoming"},
+      {"name":"Duplicate Line Remover","slug":"duplicate-line-remover","url":"","status":"upcoming"},
+      {"name":"Lorem Ipsum Generator","slug":"lorem-ipsum-generator","url":"","status":"upcoming"}
+    ]},
+    {"name":"PDF Tools","slug":"pdf-tools","tools":[
+      {"name":"PDF Merge","slug":"pdf-merge","url":"","status":"upcoming"},
+      {"name":"PDF Split","slug":"pdf-split","url":"","status":"upcoming"},
+      {"name":"PDF Compressor","slug":"pdf-compressor","url":"","status":"upcoming"},
+      {"name":"PDF to Images","slug":"pdf-to-images","url":"","status":"upcoming"},
+      {"name":"Images to PDF","slug":"images-to-pdf","url":"","status":"upcoming"}
+    ]},
+    {"name":"Image Tools","slug":"image-tools","tools":[
+      {"name":"Image Compressor","slug":"image-compressor","url":"","status":"upcoming"},
+      {"name":"Image Resizer","slug":"image-resizer","url":"","status":"upcoming"},
+      {"name":"Image Format Converter","slug":"image-format-converter","url":"","status":"upcoming"},
+      {"name":"Image to Base64","slug":"image-to-base64","url":"","status":"upcoming"}
+    ]},
+    {"name":"Security & Generators","slug":"security-generators","tools":[
+      {"name":"Password Generator","slug":"password-generator","url":"","status":"upcoming"},
+      {"name":"Password Strength Checker","slug":"password-strength-checker","url":"","status":"upcoming"},
+      {"name":"QR Code Generator","slug":"qr-code-generator","url":"","status":"upcoming"},
+      {"name":"UUID Generator","slug":"uuid-generator","url":"","status":"upcoming"}
+    ]},
+    {"name":"SEO & Website","slug":"seo-website","tools":[
+      {"name":"Meta Tag Generator","slug":"meta-tag-generator","url":"","status":"upcoming"},
+      {"name":"Robots.txt Generator","slug":"robots-txt-generator","url":"","status":"upcoming"},
+      {"name":"XML Sitemap Generator","slug":"xml-sitemap-generator","url":"","status":"upcoming"},
+      {"name":"Website Health Check","slug":"website-health-check","url":"","status":"upcoming"}
+    ]},
+    {"name":"Calculators","slug":"calculators","tools":[
+      {"name":"Percentage Calculator","slug":"percentage-calculator","url":"","status":"upcoming"},
+      {"name":"Age Calculator","slug":"age-calculator","url":"","status":"upcoming"},
+      {"name":"Unit Converter","slug":"unit-converter","url":"","status":"upcoming"},
+      {"name":"Date Difference Calculator","slug":"date-difference-calculator","url":"","status":"upcoming"}
+    ]}
+  ]
+}
