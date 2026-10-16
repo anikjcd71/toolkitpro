@@ -29,7 +29,9 @@ if (!$apiKey) api_json(401, ['error' => 'invalid_api_key', 'message' => 'The API
 
 $keyId = (int)$apiKey['id'];
 $endpointName = '/api/v1/tools';
-$rate = $pdo->prepare('SELECT COUNT(*) FROM api_requests WHERE api_key_id=? AND created_at >= (NOW() - INTERVAL 1 MINUTE)');
+$driver = strtolower(envv('DB_DRIVER','pgsql') ?? 'pgsql');
+$sinceSql = $driver === 'pgsql' ? "CURRENT_TIMESTAMP - INTERVAL '1 minute'" : 'NOW() - INTERVAL 1 MINUTE';
+$rate = $pdo->prepare('SELECT COUNT(*) FROM api_requests WHERE api_key_id=? AND created_at >= (' . $sinceSql . ')');
 $rate->execute([$keyId]);
 if ((int)$rate->fetchColumn() >= 60) {
     $log = $pdo->prepare('INSERT INTO api_requests(api_key_id,endpoint,http_status) VALUES(?,?,?)');
@@ -54,7 +56,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($args);
 $items = $stmt->fetchAll();
 
-$pdo->prepare('UPDATE api_keys SET last_used_at=NOW() WHERE id=?')->execute([$keyId]);
+$pdo->prepare('UPDATE api_keys SET last_used_at=CURRENT_TIMESTAMP WHERE id=?')->execute([$keyId]);
 $pdo->prepare('INSERT INTO api_requests(api_key_id,endpoint,http_status) VALUES(?,?,200)')->execute([$keyId,$endpointName]);
 api_json(200, [
     'data' => $items,
