@@ -30,8 +30,8 @@ $toolIconFor = static function (string $name, string $category): array {
 <meta name="description" content="PDF, ছবি, লেখা ও দৈনন্দিন ডিজিটাল কাজের প্রয়োজনীয় অনলাইন টুলস—ToolkitPro-তে এক জায়গায় খুঁজুন ও ব্যবহার করুন।">
 <meta name="theme-color" content="#315eea">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<link rel="canonical" href="https://toolkitpro-yngj.onrender.com/">
-<meta property="og:url" content="https://toolkitpro-yngj.onrender.com/">
+<link rel="canonical" href="https://toolkitpro-yngq.onrender.com/">
+<meta property="og:url" content="https://toolkitpro-yngq.onrender.com/">
 <meta property="og:locale" content="bn_BD">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ToolkitPro — ফ্রি অনলাইন টুলস">
