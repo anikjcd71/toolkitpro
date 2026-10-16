@@ -9,7 +9,16 @@ if ($cat !== '') { $sql .= " AND c.slug=?"; $args[] = $cat; }
 $sql .= " ORDER BY t.name";
 $stmt = db()->prepare($sql); $stmt->execute($args); $tools = $stmt->fetchAll();
 $categories = db()->query("SELECT name,slug FROM categories ORDER BY name")->fetchAll();
-$toolIcons = ['✦','▤','⌘','▧','↗','✳'];
+$toolIconFor = static function (string $name, string $category): array {
+ $v = mb_strtolower($name . ' ' . $category);
+ foreach ([
+  ['pdf|document|ডকুমেন্ট|পিডিএফ','▤','pdf'],['image|photo|ছবি|ইমেজ','▧','image'],
+  ['code|developer|json|html|css|javascript|প্রোগ্রাম','⌘','code'],['text|writing|word|লেখা|টেক্সট','T','text'],
+  ['security|password|সিকিউরিটি|পাসওয়ার্ড','♙','security'],['seo|website|web|সাইট|এসইও','↗','web'],
+  ['convert|converter|unit|রূপান্তর|কনভার্ট','⇄','convert'],['calculator|math|হিসাব|ক্যালকুলেটর','∑','math'],
+ ] as [$pattern,$glyph,$kind]) { if (preg_match('/'.$pattern.'/u', $v)) return [$glyph,$kind]; }
+ return ['✦','general'];
+};
 ?>
 <!doctype html>
 <html lang="bn">
@@ -67,9 +76,24 @@ $toolIcons = ['✦','▤','⌘','▧','↗','✳'];
  </section>
  <section class="content-section tools-section" id="tools">
   <div class="section-heading tools-heading"><div><span class="section-kicker"><?= $q !== '' ? 'সার্চের ফলাফল' : ($cat !== '' ? 'নির্বাচিত ক্যাটাগরি' : 'আপনার কাজের জন্য') ?></span><h2><?= $q !== '' ? 'মিলে যাওয়া টুলস' : 'টুলস এক্সপ্লোর করুন' ?></h2><p><?= $q !== '' ? 'সার্চের সঙ্গে মিলে যাওয়া টুলগুলো দেখুন।' : 'টুল বেছে নিয়ে কাজ শুরু করুন।' ?></p></div><span class="result-count"><?=count($tools)?> টি টুল</span></div>
-  <?php if ($tools): ?><div class="tool-grid">
-   <?php foreach ($tools as $i=>$t): ?><article class="tool-card"><div class="tool-card-top"><span class="tool-icon icon-<?=($i%6)+1?>" aria-hidden="true"><?=$toolIcons[$i%count($toolIcons)]?></span><span class="tool-category"><?=e($t['category_name'] ?? 'ToolkitPro')?></span></div><h3><?=e($t['name'])?></h3><p><?=e($t['description'])?></p><div class="tool-card-bottom"><?php if (!empty($t['tool_url'])): ?><a class="tool-open" href="<?=e($t['tool_url'])?>">টুলটি খুলুন <span aria-hidden="true">→</span></a><?php else: ?><span class="coming-soon">শীঘ্রই আসছে</span><?php endif; ?></div></article><?php endforeach; ?>
-  </div><?php else: ?><div class="empty-state"><span class="empty-icon">⌕</span><h3><?= $q !== '' ? 'কোনো টুল পাওয়া যায়নি' : 'এখনো টুল যুক্ত হয়নি' ?></h3><p><?= $q !== '' ? 'অন্য শব্দ দিয়ে খুঁজুন অথবা সব ক্যাটাগরি দেখুন।' : 'অ্যাডমিন প্যানেল থেকে টুল যোগ করা যাবে।' ?></p><?php if ($q !== '' || $cat !== ''): ?><a class="empty-action" href="/">সব টুলস দেখুন →</a><?php endif; ?></div><?php endif; ?>
+  <?php if ($tools):
+   $toolGroups = [];
+   foreach ($tools as $t) { $group = (string)($t['category_name'] ?? 'অন্যান্য টুলস'); $toolGroups[$group][] = $t; }
+   ksort($toolGroups, SORT_NATURAL | SORT_FLAG_CASE);
+  ?>
+   <div class="tool-groups">
+    <?php foreach ($toolGroups as $groupName=>$groupTools): ?>
+     <section class="tool-group" aria-label="<?=e($groupName)?>">
+      <div class="tool-group-heading"><div><span class="group-eyebrow">CATEGORY</span><h3><?=e($groupName)?></h3></div><span class="group-count"><?=count($groupTools)?> টুল</span></div>
+      <div class="tool-grid">
+       <?php foreach ($groupTools as $t): [$glyph,$kind] = $toolIconFor((string)$t['name'],(string)($t['category_name'] ?? '')); ?>
+        <article class="tool-card"><div class="tool-card-top"><span class="tool-icon tool-icon-<?=e($kind)?>" aria-hidden="true"><?=$glyph?></span><span class="tool-category"><?=e($t['category_name'] ?? 'ToolkitPro')?></span></div><h3><?=e($t['name'])?></h3><p><?=e($t['description'])?></p><div class="tool-card-bottom"><?php if (!empty($t['tool_url'])): ?><a class="tool-open" href="<?=e($t['tool_url'])?>">টুলটি ব্যবহার করুন <span aria-hidden="true">↗</span></a><?php else: ?><span class="coming-soon">শীঘ্রই আসছে</span><?php endif; ?></div></article>
+       <?php endforeach; ?>
+      </div>
+     </section>
+    <?php endforeach; ?>
+   </div>
+  <?php else: ?><div class="empty-state"><span class="empty-icon">⌕</span><h3><?= $q !== '' ? 'কোনো টুল পাওয়া যায়নি' : 'এখনো টুল যুক্ত হয়নি' ?></h3><p><?= $q !== '' ? 'অন্য শব্দ দিয়ে খুঁজুন অথবা সব ক্যাটাগরি দেখুন।' : 'অ্যাডমিন প্যানেল থেকে টুল যোগ করা যাবে।' ?></p><?php if ($q !== '' || $cat !== ''): ?><a class="empty-action" href="/">সব টুলস দেখুন →</a><?php endif; ?></div><?php endif; ?>
  </section>
 </main>
 <footer class="site-footer"><div class="footer-inner">
