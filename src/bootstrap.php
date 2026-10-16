@@ -23,7 +23,43 @@ function db(): PDO {
  elseif($driver==='mysql') $dsn="mysql:host=$host;port=$port;dbname=$name;charset=utf8mb4";
  else throw new RuntimeException('Unsupported DB_DRIVER. Use pgsql or mysql.');
  $pdo=new PDO($dsn,$user,$pass,[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);
+ if ($driver === 'pgsql' && envv('AUTO_DB_MIGRATE','1') === '1') {
+  ensure_pg_schema($pdo);
+ }
  return $pdo;
+}
+function ensure_pg_schema(PDO $pdo): void {
+ static $checked=false;
+ if($checked) return;
+ $checked=true;
+ // Fast path: tables already exist.
+ $ready=(bool)$pdo->query("SELECT to_regclass('public.tools') IS NOT NULL AND to_regclass('public.api_keys') IS NOT NULL")->fetchColumn();
+ if($ready) return;
+ // Serialize first-run migration across concurrent web requests.
+ $pdo->query("SELECT pg_advisory_lock(72619042)");
+ try {
+  $ready=(bool)$pdo->query("SELECT to_regclass('public.tools') IS NOT NULL AND to_regclass('public.api_keys') IS NOT NULL")->fetchColumn();
+  if(!$ready) {
+   $base=dirname(__DIR__).'/database/';
+   $files=['schema.pgsql.sql','api_migration.pgsql.sql'];
+   $pdo->beginTransaction();
+   try {
+    foreach($files as $file) {
+     $path=$base.$file;
+     if(!is_file($path)) throw new RuntimeException('Database migration file missing: '.$file);
+     $sql=file_get_contents($path);
+     if($sql===false || trim($sql)==='') throw new RuntimeException('Database migration file empty: '.$file);
+     $pdo->exec($sql);
+    }
+    $pdo->commit();
+   } catch(Throwable $e) {
+    if($pdo->inTransaction()) $pdo->rollBack();
+    throw $e;
+   }
+  }
+ } finally {
+  $pdo->query("SELECT pg_advisory_unlock(72619042)");
+ }
 }
 function e(?string $s): string { return htmlspecialchars($s??'',ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8'); }
 function csrf_token(): string { if(empty($_SESSION['csrf'])) $_SESSION['csrf']=bin2hex(random_bytes(32)); return $_SESSION['csrf']; }
