@@ -27,9 +27,12 @@ if (is_file($catalogPath)) {
                 if ($slug === '' || isset($knownSlugs[$slug])) {
                     continue;
                 }
+                if ($cat !== '' && $cat !== $categorySlug) { continue; }
+                $toolName = (string) ($catalogTool['name'] ?? $slug);
+                if ($q !== '' && stripos($toolName, $q) === false && stripos($categoryName, $q) === false) { continue; }
                 $status = (string) ($catalogTool['status'] ?? 'upcoming');
                 $tools[] = [
-                    'name' => (string) ($catalogTool['name'] ?? $slug),
+                    'name' => $toolName,
                     'slug' => $slug,
                     'description' => $status === 'live'
                         ? 'আপনার কাজ দ্রুত ও সহজে সম্পন্ন করুন।'
