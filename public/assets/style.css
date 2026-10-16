@@ -103,3 +103,51 @@
  .hero-art .tool-tile{animation:none}
 }
 @media(prefers-reduced-motion:reduce){.hero-art .tool-tile{animation:none}}
+
+/* Screenshot-inspired ToolkitPro mobile refresh */
+:root{--ink:#1d2939;--muted:#65738b;--brand:#315eea;--violet:#7138e8;--line:#e1e7f0}
+body{background:#f7f9fc;color:var(--ink)}
+.site-header{height:82px;background:#fff;border-bottom:2px solid #2d64ed;box-shadow:0 3px 14px #1e3b750b}
+.header-inner{max-width:1240px;padding:0 24px}
+.brand{font-size:1.28rem;letter-spacing:-.035em}
+.brand-mark{width:56px;height:56px;border-radius:17px;font-size:1.55rem;background:linear-gradient(135deg,#3465f3,#7439e8);box-shadow:0 8px 18px #4a5be72e}
+.brand small{font-size:.58rem;letter-spacing:0;color:#7d8798}
+.brand-pro{color:#5c50e8}
+.main-nav a{font-weight:700}
+.admin-link{border-radius:13px}
+.hero{margin:34px auto 0;max-width:1240px;border-radius:32px;min-height:0;background:linear-gradient(115deg,#2867e9 0%,#4b49e8 52%,#7938e9 100%);box-shadow:0 18px 38px #405be51c}
+.hero-content{padding:42px 38px 45px}
+.hero-kicker{border:0;background:transparent;padding:0;color:#dfe7ff;font-size:.86rem;letter-spacing:.1em}
+.hero h1{font-size:clamp(2.3rem,5vw,3.5rem);letter-spacing:-.035em;margin:18px 0}
+.hero h1 span{color:#ffd94f}
+.hero-copy{font-size:clamp(1rem,2.4vw,1.25rem);line-height:1.75;color:#e6eaff;max-width:780px}
+.hero-note{display:none}
+.hero-art{opacity:.3}
+.search-form{border-radius:15px;box-shadow:0 10px 24px #101a4930}
+.search-form button{background:linear-gradient(120deg,#315fe9,#7041e7)}
+.trust-strip{margin-top:18px;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px #1a2c4a08}
+.content-section{padding-top:36px}
+.section-heading h2{font-size:1.5rem}
+.category-chip{border-radius:12px;background:#fff;padding:12px 15px}
+.category-chip.selected{background:linear-gradient(120deg,#315fe9,#7041e7)}
+.tool-card{border-radius:19px;padding:22px}
+.site-footer{margin-top:28px}
+@media(max-width:620px){
+ .site-header{height:76px}
+ .header-inner{padding:0 16px;gap:9px}
+ .brand{font-size:1.05rem}
+ .brand-mark{width:52px;height:52px;border-radius:16px}
+ .hero{margin:26px 14px 0;border-radius:27px}
+ .hero-content{padding:34px 24px 38px}
+ .hero-kicker{font-size:.68rem;letter-spacing:.075em}
+ .hero h1{font-size:clamp(2rem,8.2vw,2.8rem);line-height:1.2;margin:15px 0}
+ .hero-copy{font-size:1rem;line-height:1.7}
+ .hero-art{right:-110px;opacity:.12}
+ .search-form{margin-top:22px}
+ .trust-strip{margin:16px 14px 0}
+ .content-section{padding:34px 16px 0}
+ .section-heading h2{font-size:1.35rem}
+ .category-chip{padding:10px 12px}
+ .tools-section{padding-top:34px}
+ .footer-inner{padding:24px 17px}
+}
