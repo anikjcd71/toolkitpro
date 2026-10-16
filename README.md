@@ -12,8 +12,8 @@ The Render service blueprint wires the existing Render database named `toolkit` 
 
 1. Deploy the latest `main` branch.
 2. Connect to the Render Postgres database using its dashboard-provided PSQL command or an SQL client.
-3. Run `database/schema.pgsql.sql`.
-4. Run `database/api_migration.pgsql.sql` to enable API keys/request logging.
+3. Run `php database/install.php` from a secure CLI/shell in the deployed project. This CLI-only installer applies both PostgreSQL SQL files in order.
+   - Alternatively, execute `database/schema.pgsql.sql` and then `database/api_migration.pgsql.sql` manually in Render PSQL.
 5. Create an admin using the project's admin setup script; configure its required environment variables securely.
 
 Do not paste database passwords or connection strings into chat, source control, or public issue reports.
