@@ -20,7 +20,7 @@ $categories=db()->query("SELECT name,slug FROM categories ORDER BY name")->fetch
 <meta property="og:type" content="website"><meta property="og:site_name" content="ToolkitPro"><meta property="og:title" content="ToolkitPro — আপনার কাজের স্মার্ট টুলবক্স"><meta property="og:description" content="দৈনন্দিন ডিজিটাল কাজের দরকারি অনলাইন টুলস—এক জায়গায়, সহজে খুঁজুন, দ্রুত ব্যবহার করুন।">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg"><link rel="alternate icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/style.css">
 </head>
-<body>
+<body id="top">
 <header class="site-header"><div class="header-inner">
 <a class="brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark">T</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a>
 <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="মেনু খুলুন"><span></span><span></span><span></span></button><nav class="main-nav" id="primary-navigation" aria-label="প্রধান নেভিগেশন"><a class="nav-active" href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></nav>
@@ -60,5 +60,10 @@ $categories=db()->query("SELECT name,slug FROM categories ORDER BY name")->fetch
 </article><?php endforeach; ?></div>
 <?php else: ?><div class="empty-state"><div class="empty-icon">⌕</div><h3><?= $q !== '' ? 'কোনো টুল পাওয়া যায়নি' : 'টুলস যোগ করা হচ্ছে' ?></h3><p><?= $q !== '' ? 'অন্য শব্দ দিয়ে সার্চ করুন অথবা সব ক্যাটাগরি দেখুন।' : 'নতুন টুল যুক্ত হলে এখানে দেখা যাবে।' ?></p><?php if($q !== '' || $cat !== ''): ?><a class="empty-action" href="/">সব টুলস দেখুন <span>→</span></a><?php endif; ?></div><?php endif; ?>
 </section></main>
-<footer class="site-footer"><div class="footer-inner"><a class="brand footer-brand" href="/"><span class="brand-mark">T</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a><p>আপনার ডিজিটাল কাজকে সহজ করার ছোট্ট উদ্যোগ।</p><span class="copyright">© <?=date('Y')?> ToolkitPro. সর্বস্বত্ব সংরক্ষিত।</span></div></footer>
+<footer class="site-footer"><div class="footer-inner">
+<div class="footer-about"><a class="brand footer-brand" href="/" aria-label="ToolkitPro হোম"><span class="brand-mark">T</span><span>Toolkit<span class="brand-pro">Pro</span><small>SMART TOOLS, SIMPLE WORK</small></span></a><p>আপনার ডিজিটাল কাজকে সহজ, দ্রুত ও আরও গুছিয়ে করার স্মার্ট টুলবক্স।</p></div>
+<div class="footer-nav"><strong>দ্রুত লিংক</strong><a href="/">হোম</a><a href="#categories">ক্যাটাগরি</a><a href="#tools">সব টুলস</a></div>
+<div class="footer-nav"><strong>শুরু করুন</strong><a href="#tools">টুলস খুঁজুন ↗</a><a href="/admin/login.php">অ্যাডমিন প্যানেল ↗</a></div>
+<div class="footer-bottom"><span>© <?=date("Y")?> ToolkitPro. সর্বস্বত্ব সংরক্ষিত।</span><a href="#top">উপরে যান ↑</a></div>
+</div></footer>
 <script>(function(){var btn=document.querySelector('.mobile-menu-toggle'),nav=document.querySelector('.main-nav');if(!btn||!nav)return;btn.addEventListener('click',function(){var open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!open));nav.classList.toggle('is-open',!open);btn.setAttribute('aria-label',open?'মেনু খুলুন':'মেনু বন্ধ করুন');});nav.addEventListener('click',function(e){if(e.target.closest('a')){nav.classList.remove('is-open');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','মেনু খুলুন');}});})();</script></body></html>
