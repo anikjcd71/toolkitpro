@@ -52,7 +52,7 @@ $toolIcons = ['✦','▤','⌘','▧','↗','✳'];
     <button type="submit">খুঁজুন <span aria-hidden="true">→</span></button>
    </form>
   </div>
-  <div class="hero-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="floating-tool art-center">✳<small>TOOLKIT</small></div><div class="floating-tool art-pdf">PDF</div><div class="floating-tool art-image">▧</div><div class="floating-tool art-code">&lt;/&gt;</div><span class="art-star star-one">✦</span><span class="art-star star-two">✧</span></div>
+  <div class="hero-art"><img src="/assets/toolkit-hero.svg" alt="ToolkitPro ওয়েব, ডেভেলপার ও PDF টুলসের চিত্র" width="560" height="390" fetchpriority="high"></div>
  </section>
  <section class="benefits" aria-label="ToolkitPro সুবিধা">
   <div class="benefit"><span class="benefit-icon">⌕</span><span><b>সহজে খুঁজুন</b><small>সার্চ ও ক্যাটাগরি</small></span></div>
