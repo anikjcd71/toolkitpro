@@ -7,10 +7,10 @@ const translations={
 const storageKey='toolkitpro-language';let lang='bn';try{lang=localStorage.getItem(storageKey)||'bn';}catch(e){}
 const toggle=document.querySelector('.language-toggle');
 function applyLanguage(next){lang=next;document.documentElement.lang=lang;document.documentElement.dataset.language=lang;const map=lang==='en'?translations:Object.fromEntries(Object.entries(translations).map(([bn,en])=>[en,bn]));
-const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(n=>{const raw=n.nodeValue;if(!raw||!raw.trim())return;const trimmed=raw.trim();if(map[trimmed])n.nodeValue=raw.replace(trimmed,map[trimmed]);});
+const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);const keys=Object.keys(map).sort((a,b)=>b.length-a.length);nodes.forEach(n=>{let value=n.nodeValue;if(!value||!value.trim())return;keys.forEach(key=>{value=value.split(key).join(map[key]);});n.nodeValue=value;});
 document.querySelectorAll('[placeholder]').forEach(el=>{const original=el.dataset.bnPlaceholder||el.getAttribute('placeholder');if(!el.dataset.bnPlaceholder)el.dataset.bnPlaceholder=original;const value=lang==='en'?(translations[original]||original):(Object.entries(translations).find(([bn,en])=>en===original)?.[0]||original);el.setAttribute('placeholder',value);});
 if(toggle){toggle.textContent=lang==='bn'?'EN':'বাংলা';toggle.setAttribute('aria-label',lang==='bn'?'Switch to English':'বাংলায় পরিবর্তন করুন');toggle.title=lang==='bn'?'Switch to English':'Switch to Bengali';}
-if(document.title.includes('ToolkitPro'))document.title=lang==='en'?document.title.replace('ফ্রি অনলাইন টুলস','Free Online Tools').replace('সব টুলস এক জায়গায়','All Tools in One Place'):document.title;
+const originalTitle=document.documentElement.dataset.originalTitle||(document.documentElement.dataset.originalTitle=document.title);if(originalTitle.includes('ToolkitPro'))document.title=lang==='en'?originalTitle.replace('ফ্রি অনলাইন টুলস','Free Online Tools').replace('সব টুলস এক জায়গায়','All Tools in One Place'):originalTitle;
 }
 if(toggle)toggle.addEventListener('click',()=>{const next=lang==='bn'?'en':'bn';try{localStorage.setItem(storageKey,next);}catch(e){}applyLanguage(next);});
 applyLanguage(lang);
